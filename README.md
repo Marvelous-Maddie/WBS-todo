@@ -1,5 +1,21 @@
 # To Do app for WBS bootcamp
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## v. 1.0.0
+
+### Features
+
+- Add task
+- Remove task
+
+### Coming features
+
+- Check for completion
+- Local storage
+- Motivational phrase
+- Set name
+
 ## Tech-stack
 
 - HTML5
@@ -9,10 +25,6 @@
 ## Live demo
 
 [https://weyvern.github.io/WBS-todo/](https://weyvern.github.io/WBS-todo/)
-
-## License
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Setup
 
