@@ -1,0 +1,16 @@
+body {
+  background-image: url('https://cdn.pixabay.com/photo/2012/12/13/11/48/blue-69738_1280.jpg');
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.layer {
+  background-color: rgba(248, 247, 216, 0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
