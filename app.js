@@ -1,59 +1,81 @@
 // Task class => Defines what a task is
 class Task {
+  // Constructor: requires a description and sets completion to false
   constructor(desc, isCompleted = false) {
+    this.id = Math.floor(Math.random() * 100);
     this.desc = desc;
     this.isCompleted = isCompleted;
   }
 }
 // UI class => Handles every UI operation
 class UI {
+  // Gets tasks and loops through to to call addTask method
   static displayTasks() {
-    const StoreTasks = [
-      {
-        desc: 'Walk the dog',
-        isCompleted: false
-      },
-      {
-        desc: 'Prepare presentation',
-        isCompleted: false
-      },
-      {
-        desc: 'Finish project',
-        isCompleted: false
-      },
-      {
-        desc: 'Go to the movies',
-        isCompleted: false
-      }
-    ];
-    const tasks = StoreTasks;
+    const tasks = Storage.getTasks();
 
     tasks.forEach(task => UI.addTask(task));
   }
-
+  // Adds a task to the UI
   static addTask(task) {
     const tbody = document.getElementById('tasks');
     const row = document.createElement('tr');
     row.classList.add('d-flex');
     row.innerHTML = `
         <td class="col-9">${task.desc}</td>
-        <td class="col-3">
-            <a href="#" class="d-inline btn btn-success btn-sm complete"><i class="fas fa-check"></i></a>
-            <a href="#" class="d-inline btn btn-danger btn-sm delete"><i class="fas fa-trash"></i></a>
+        <td data-id="${task.id}" class="col-3">
+            <button class="d-inline btn btn-success btn-sm complete"><i class="fas fa-check"></i></button>
+            <button class="d-inline btn btn-danger btn-sm delete"><i class="fas fa-trash"></i></button>
         </td>
     `;
     tbody.appendChild(row);
   }
+  // Removes a taks from the UI
+  static removeTask(e) {
+    e.target.parentElement.parentElement.parentElement.remove();
+  }
+  // Clears input
+  static clearInput() {
+    document.getElementById('input').value = '';
+  }
 }
 // Local storage class => save data into the browser
-
+class Storage {
+  // Gets tasks from local storage if key exists, otherwise, returns an empty array that will be passed to UI.displayTasks
+  static getTasks() {
+    let tasks;
+    if (localStorage.getItem('tasks') === null) {
+      tasks = [];
+    } else {
+      tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+    return tasks;
+  }
+  // Gets tasks from local storage, pushes new task and sets local storage
+  static addTask(task) {
+    const tasks = Storage.getTasks();
+    tasks.push(task);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
+  // Remove item from local storage
+  static removeTask(id) {
+    const tasks = Storage.getTasks();
+    tasks.forEach((task, index) => {
+      if (task.id === id) {
+        tasks.splice(index, 1);
+      }
+    });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
+}
 // Global variables
 const submit = document.getElementById('submit');
 const tasks = document.getElementById('tasks');
 // Event listeners
 // Whenever page is loaded get stored tasks
 document.addEventListener('DOMContentLoaded', UI.displayTasks);
+// On submit, create task
 submit.addEventListener('click', createTask);
+// On click on delete icon, delete task
 tasks.addEventListener('click', deleteTask);
 // Create
 function createTask(e) {
@@ -64,6 +86,8 @@ function createTask(e) {
   } else {
     const task = new Task(input);
     UI.addTask(task);
+    Storage.addTask(task);
+    UI.clearInput();
   }
 }
 // Read
@@ -73,9 +97,14 @@ function createTask(e) {
 // Delete
 function deleteTask(e) {
   if (e.target.parentElement.classList.contains('delete')) {
-    console.log('This contains the delete class');
+    UI.removeTask(e);
+    const taskId = Number(
+      e.target.parentElement.parentElement.getAttribute('data-id')
+    );
+    Storage.removeTask(taskId);
   }
 }
+
 /* Javascript Classes
     Class defines how objects are created
     E.g: a class of person defines what a person is
