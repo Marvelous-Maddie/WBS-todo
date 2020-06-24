@@ -1,6 +1,7 @@
 // Task class => Defines what a task is
 class Task {
   constructor(desc, isCompleted = false) {
+    this.id = Math.random().toString(36).substr(2, 9);
     this.desc = desc;
     this.isCompleted = isCompleted;
   }
@@ -10,18 +11,22 @@ class UI {
   static displayTasks() {
     const StoreTasks = [
       {
+        id: '670fik88a',
         desc: 'Walk the dog',
         isCompleted: false
       },
       {
+        id: '7pqz8tkuc',
         desc: 'Prepare presentation',
         isCompleted: false
       },
       {
+        id: 'g5wzv8ulf',
         desc: 'Finish project',
         isCompleted: false
       },
       {
+        id: 'gu9ug4acr',
         desc: 'Go to the movies',
         isCompleted: false
       }
@@ -36,13 +41,21 @@ class UI {
     const row = document.createElement('tr');
     row.classList.add('d-flex');
     row.innerHTML = `
-        <td class="col-9">${task.desc}</td>
-        <td class="col-3">
+        <td data-taskID="${task.id}" class="col-9">${task.desc}</td>
+        <td class="col-3 d-flex justify-content-center">
             <a href="#" class="d-inline btn btn-success btn-sm complete"><i class="fas fa-check"></i></a>
             <a href="#" class="d-inline btn btn-danger btn-sm delete"><i class="fas fa-trash"></i></a>
         </td>
     `;
     tbody.appendChild(row);
+  }
+
+  static removeTask(e) {
+    e.target.parentElement.parentElement.parentElement.remove();
+  }
+
+  static clearFields() {
+    document.getElementById('input').value = '';
   }
 }
 // Local storage class => save data into the browser
@@ -64,16 +77,16 @@ function createTask(e) {
   } else {
     const task = new Task(input);
     UI.addTask(task);
+    UI.clearFields();
   }
 }
-// Read
-
 // Update (opcional)
 
 // Delete
 function deleteTask(e) {
+  e.preventDefault();
   if (e.target.parentElement.classList.contains('delete')) {
-    console.log('This contains the delete class');
+    UI.removeTask(e);
   }
 }
 /* Javascript Classes
