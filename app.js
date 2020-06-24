@@ -2,7 +2,6 @@
 class Task {
   // Constructor: requires a description and sets completion to false
   constructor(desc, isCompleted = false) {
-    this.id = Math.random().toString(36).substr(2, 9);
     this.id = Math.floor(Math.random() * 100);
     this.desc = desc;
     this.isCompleted = isCompleted;
@@ -12,29 +11,6 @@ class Task {
 class UI {
   // Gets tasks and loops through to to call addTask method
   static displayTasks() {
-    const StoreTasks = [
-      {
-        id: '670fik88a',
-        desc: 'Walk the dog',
-        isCompleted: false
-      },
-      {
-        id: '7pqz8tkuc',
-        desc: 'Prepare presentation',
-        isCompleted: false
-      },
-      {
-        id: 'g5wzv8ulf',
-        desc: 'Finish project',
-        isCompleted: false
-      },
-      {
-        id: 'gu9ug4acr',
-        desc: 'Go to the movies',
-        isCompleted: false
-      }
-    ];
-    const tasks = StoreTasks;
     const tasks = Storage.getTasks();
 
     tasks.forEach(task => UI.addTask(task));
@@ -45,11 +21,6 @@ class UI {
     const row = document.createElement('tr');
     row.classList.add('d-flex');
     row.innerHTML = `
-        <td data-taskID="${task.id}" class="col-9">${task.desc}</td>
-        <td class="col-3 d-flex justify-content-center">
-            <a href="#" class="d-inline btn btn-success btn-sm complete"><i class="fas fa-check"></i></a>
-            <a href="#" class="d-inline btn btn-info btn-sm edit"><i class="fas fa-edit"></i></a>
-            <a href="#" class="d-inline btn btn-danger btn-sm delete"><i class="fas fa-trash"></i></a>
         <td class="col-9">${task.desc}</td>
         <td data-id="${task.id}" class="col-3">
             <button class="d-inline btn btn-success btn-sm complete"><i class="fas fa-check"></i></button>
@@ -58,11 +29,6 @@ class UI {
     `;
     tbody.appendChild(row);
   }
-
-  static removeTask(e) {
-    e.target.parentElement.parentElement.parentElement.remove();
-  }
-
   // Removes a taks from the UI
   static removeTask(e) {
     e.target.parentElement.parentElement.parentElement.remove();
@@ -120,16 +86,16 @@ function createTask(e) {
   } else {
     const task = new Task(input);
     UI.addTask(task);
-    UI.clearFields();
     Storage.addTask(task);
     UI.clearInput();
   }
 }
+// Read
+
 // Update (opcional)
 
 // Delete
 function deleteTask(e) {
-  e.preventDefault();
   if (e.target.parentElement.classList.contains('delete')) {
     UI.removeTask(e);
     const taskId = Number(
