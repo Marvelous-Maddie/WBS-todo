@@ -63,7 +63,6 @@ class UI {
     e.target.parentElement.parentElement.parentElement.remove();
   }
 
-  static clearFields() {
   // Removes a taks from the UI
   static removeTask(e) {
     e.target.parentElement.parentElement.parentElement.remove();
