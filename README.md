@@ -10,11 +10,11 @@
 - Remove task from UI
 - Clear input after submit
 - Local storage class (get, add, remove)
+- Check for completion => Jorge
+- Motivational phrase => Madlen
 
 ### Coming features
 
-- Check for completion => Jorge
-- Motivational phrase => Madlen
 - Delete all tasks => Easy
 - Set name of owne => Togara
 - Edit => Group session
