@@ -2,6 +2,29 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+## v. 1.1.0 (Current)
+
+### Features
+
+- Add task to UI
+- Remove task from UI
+- Clear input after submit
+- Local storage class (get, add, remove)
+
+### Coming features
+
+- Check for completion => Jorge
+- Motivational phrase => Madlen
+- Delete all tasks => Easy
+- Set name of owne => Togara
+- Edit => Group session
+
+### Other changes
+
+- Set background attachment to fixed (styles.css:7)
+- Set background height to auto (styles.css:3)
+- Set z-index for overlay (styles.css:11)
+
 ## v. 1.0.0
 
 ### Features

@@ -1,14 +1,21 @@
 // Task class => Defines what a task is
 class Task {
+  // Constructor: requires a description and sets completion to false
   constructor(desc, isCompleted = false) {
+<<<<<<< HEAD
     this.id = Math.random().toString(36).substr(2, 9);
+=======
+    this.id = Math.floor(Math.random() * 100);
+>>>>>>> 531325be4196c63c8c714c18f00a83a5cc7d00ef
     this.desc = desc;
     this.isCompleted = isCompleted;
   }
 }
 // UI class => Handles every UI operation
 class UI {
+  // Gets tasks and loops through to to call addTask method
   static displayTasks() {
+<<<<<<< HEAD
     const StoreTasks = [
       {
         id: '670fik88a',
@@ -32,42 +39,90 @@ class UI {
       }
     ];
     const tasks = StoreTasks;
+=======
+    const tasks = Storage.getTasks();
+>>>>>>> 531325be4196c63c8c714c18f00a83a5cc7d00ef
 
     tasks.forEach(task => UI.addTask(task));
   }
-
+  // Adds a task to the UI
   static addTask(task) {
     const tbody = document.getElementById('tasks');
     const row = document.createElement('tr');
     row.classList.add('d-flex');
     row.innerHTML = `
+<<<<<<< HEAD
         <td data-taskID="${task.id}" class="col-9">${task.desc}</td>
         <td class="col-3 d-flex justify-content-center">
             <a href="#" class="d-inline btn btn-success btn-sm complete"><i class="fas fa-check"></i></a>
             <a href="#" class="d-inline btn btn-info btn-sm edit"><i class="fas fa-edit"></i></a>
             <a href="#" class="d-inline btn btn-danger btn-sm delete"><i class="fas fa-trash"></i></a>
+=======
+        <td class="col-9">${task.desc}</td>
+        <td data-id="${task.id}" class="col-3">
+            <button class="d-inline btn btn-success btn-sm complete"><i class="fas fa-check"></i></button>
+            <button class="d-inline btn btn-danger btn-sm delete"><i class="fas fa-trash"></i></button>
+>>>>>>> 531325be4196c63c8c714c18f00a83a5cc7d00ef
         </td>
     `;
     tbody.appendChild(row);
   }
+<<<<<<< HEAD
 
   static removeTask(e) {
     e.target.parentElement.parentElement.parentElement.remove();
   }
 
   static clearFields() {
+=======
+  // Removes a taks from the UI
+  static removeTask(e) {
+    e.target.parentElement.parentElement.parentElement.remove();
+  }
+  // Clears input
+  static clearInput() {
+>>>>>>> 531325be4196c63c8c714c18f00a83a5cc7d00ef
     document.getElementById('input').value = '';
   }
 }
 // Local storage class => save data into the browser
-
+class Storage {
+  // Gets tasks from local storage if key exists, otherwise, returns an empty array that will be passed to UI.displayTasks
+  static getTasks() {
+    let tasks;
+    if (localStorage.getItem('tasks') === null) {
+      tasks = [];
+    } else {
+      tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+    return tasks;
+  }
+  // Gets tasks from local storage, pushes new task and sets local storage
+  static addTask(task) {
+    const tasks = Storage.getTasks();
+    tasks.push(task);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
+  // Remove item from local storage
+  static removeTask(id) {
+    const tasks = Storage.getTasks();
+    tasks.forEach((task, index) => {
+      if (task.id === id) {
+        tasks.splice(index, 1);
+      }
+    });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
+}
 // Global variables
 const submit = document.getElementById('submit');
 const tasks = document.getElementById('tasks');
 // Event listeners
 // Whenever page is loaded get stored tasks
 document.addEventListener('DOMContentLoaded', UI.displayTasks);
+// On submit, create task
 submit.addEventListener('click', createTask);
+// On click on delete icon, delete task
 tasks.addEventListener('click', deleteTask);
 // Create
 function createTask(e) {
@@ -78,7 +133,12 @@ function createTask(e) {
   } else {
     const task = new Task(input);
     UI.addTask(task);
+<<<<<<< HEAD
     UI.clearFields();
+=======
+    Storage.addTask(task);
+    UI.clearInput();
+>>>>>>> 531325be4196c63c8c714c18f00a83a5cc7d00ef
   }
 }
 // Update (opcional)
@@ -88,8 +148,16 @@ function deleteTask(e) {
   e.preventDefault();
   if (e.target.parentElement.classList.contains('delete')) {
     UI.removeTask(e);
+<<<<<<< HEAD
+=======
+    const taskId = Number(
+      e.target.parentElement.parentElement.getAttribute('data-id')
+    );
+    Storage.removeTask(taskId);
+>>>>>>> 531325be4196c63c8c714c18f00a83a5cc7d00ef
   }
 }
+
 /* Javascript Classes
     Class defines how objects are created
     E.g: a class of person defines what a person is
