@@ -33,7 +33,7 @@ class UI {
     ];
     const tasks = StoreTasks;
 
-    tasks.forEach((task) => UI.addTask(task));
+    tasks.forEach(task => UI.addTask(task));
   }
 
   static addTask(task) {
@@ -44,6 +44,7 @@ class UI {
         <td data-taskID="${task.id}" class="col-9">${task.desc}</td>
         <td class="col-3 d-flex justify-content-center">
             <a href="#" class="d-inline btn btn-success btn-sm complete"><i class="fas fa-check"></i></a>
+            <a href="#" class="d-inline btn btn-info btn-sm edit"><i class="fas fa-edit"></i></a>
             <a href="#" class="d-inline btn btn-danger btn-sm delete"><i class="fas fa-trash"></i></a>
         </td>
     `;
