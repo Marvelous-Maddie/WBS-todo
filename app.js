@@ -44,6 +44,14 @@ class UI {
     `;
     tbody.appendChild(row);
   }
+
+  static clearFields(e) {
+    e.target.parentElement.parentElement.parentElement.remove();
+  }
+
+  static clearInput() {
+    document.getElementById('input').value = '';
+  }
 }
 // Local storage class => save data into the browser
 
@@ -64,6 +72,7 @@ function createTask(e) {
   } else {
     const task = new Task(input);
     UI.addTask(task);
+    UI.clearInput(); /*new*/
   }
 }
 // Read
@@ -73,7 +82,7 @@ function createTask(e) {
 // Delete
 function deleteTask(e) {
   if (e.target.parentElement.classList.contains('delete')) {
-    console.log('This contains the delete class');
+    UI.clearFields(e);
   }
 }
 /* Javascript Classes
@@ -85,31 +94,31 @@ function deleteTask(e) {
 */
 
 /*
-Event propagation / delegation => instead of targeting the element, you target a parent 
+Event propagation / delegation => instead of targeting the element, you target a parent
 */
 
 /* To-do:
     On load -> Show tasks that are already stored
-    Create remove method 
-    Create alert system 
-    Complete a task 
+    Create remove method
+    Create alert system
+    Complete a task
  */
 
 /*
  Pseudo-code:
 
-function addTask 
+function addTask
     takes in an instance of a Task
     Gets the body of the table
     Create a new row
-    Puts value of task in row 
+    Puts value of task in row
     Append row to body
 
-Entry point: 
+Entry point:
  Get value of input (#input)
  if value is empty
     then show alert -> Field is required
-else 
+else
     call a function addTask  to show my task on window
- 
+
  */
