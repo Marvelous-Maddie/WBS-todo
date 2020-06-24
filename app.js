@@ -28,7 +28,7 @@ class UI {
     ];
     const tasks = StoreTasks;
 
-    tasks.forEach((task) => UI.addTask(task));
+    tasks.forEach(task => UI.addTask(task));
   }
 
   static addTask(task) {
