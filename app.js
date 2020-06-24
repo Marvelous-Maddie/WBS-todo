@@ -1,9 +1,31 @@
 //Motivational Quotes
-const quote1 = {quote: "All we have to decide is what to do with the time that is given us.", author:"J.R.R. Tolkien", title:"The Fellowship of the Ring"};
-const quote2 = {quote:"Be yourself and people will like you.", author:"J. Kinney", title:"Diary of a Wimpy Kid"};
-const quote3 = {quote:"The moment you doubt whether you can fly, you cease forever to be able to do it.", author:"J.M. Barrie", title:"Peter Pan"};
-const quote4 = {quote:"Time you enjoy wasting is not wasted time.", author: "M. Troly-Curtin", title:"Phrynette Married"};
-const quote5 = {quote:"One sees clearly only with the heart. Anything essential is invisible to the eyes.", author:"A. de Saint-Exupéry", title:"The Little Prince"};
+const quote1 = {
+  quote: 'All we have to decide is what to do with the time that is given us.',
+  author: 'J.R.R. Tolkien',
+  title: 'The Fellowship of the Ring'
+};
+const quote2 = {
+  quote: 'Be yourself and people will like you.',
+  author: 'J. Kinney',
+  title: 'Diary of a Wimpy Kid'
+};
+const quote3 = {
+  quote:
+    'The moment you doubt whether you can fly, you cease forever to be able to do it.',
+  author: 'J.M. Barrie',
+  title: 'Peter Pan'
+};
+const quote4 = {
+  quote: 'Time you enjoy wasting is not wasted time.',
+  author: 'M. Troly-Curtin',
+  title: 'Phrynette Married'
+};
+const quote5 = {
+  quote:
+    'One sees clearly only with the heart. Anything essential is invisible to the eyes.',
+  author: 'A. de Saint-Exupéry',
+  title: 'The Little Prince'
+};
 const motivationalQuotes = new Array(quote1, quote2, quote3, quote4, quote5);
 // Task class => Defines what a task is
 class Task {
@@ -20,8 +42,7 @@ class UI {
   static displayTasks() {
     const tasks = Storage.getTasks();
 
-    tasks.forEach((task) => UI.addTask(task));
-    UI.selectQuote();
+    tasks.forEach(task => UI.addTask(task));
   }
   // Adds a task to the UI
   static addTask(task) {
@@ -29,9 +50,21 @@ class UI {
     const row = document.createElement('tr');
     row.classList.add('d-flex');
     row.innerHTML = `
-        <td class="col-9">${task.desc}</td>
+        ${
+          task.isCompleted === true
+            ? '<td class="col-9"><s>' + task.desc + '</s></td>'
+            : '<td class="col-9">' + task.desc + '</td>'
+        }
         <td data-id="${task.id}" class="col-3">
-            <button class="d-inline btn btn-success btn-sm complete"><i class="fas fa-check"></i></button>
+          ${
+            task.isCompleted === true
+              ? `<button class="d-inline btn btn-info btn-sm complete">
+                  <i class="fas fa-undo"></i>
+              </button>`
+              : `<button class="d-inline btn btn-success btn-sm complete">
+                  <i class="fas fa-check"></i>
+              </button>`
+          } 
             <button class="d-inline btn btn-danger btn-sm delete"><i class="fas fa-trash"></i></button>
         </td>
     `;
@@ -53,9 +86,15 @@ class UI {
     const quote = motivationalQuotes[randomNumber].quote;
     const author = motivationalQuotes[randomNumber].author;
     const title = motivationalQuotes[randomNumber].title;
-    document.getElementById('quote').innerHTML = `<p id="quote" class="mb-0">\"${quote}\"</p>`;
-    document.getElementById('author').innerHTML = `<footer id="author" class="blockquote-footer">${author} in <cite id="title"></cite></footer>`;
-    document.getElementById('title').innerHTML = `<cite id="title">${title}</cite>`;
+    document.getElementById(
+      'quote'
+    ).innerHTML = `<p id="quote" class="mb-0">\"${quote}\"</p>`;
+    document.getElementById(
+      'author'
+    ).innerHTML = `<footer id="author" class="blockquote-footer">${author} in <cite id="title"></cite></footer>`;
+    document.getElementById(
+      'title'
+    ).innerHTML = `<cite id="title">${title}</cite>`;
   }
 }
 
@@ -87,17 +126,33 @@ class Storage {
     });
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }
+  // Mark/unmark task
+  static checkTask(id) {
+    const tasks = Storage.getTasks();
+    tasks.forEach(task => {
+      if (task.id === id) {
+        task.isCompleted = !task.isCompleted;
+      }
+    });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
 }
 // Global variables
 const submit = document.getElementById('submit');
 const tasks = document.getElementById('tasks');
 // Event listeners
 // Whenever page is loaded get stored tasks
-document.addEventListener('DOMContentLoaded', UI.displayTasks);
+document.addEventListener('DOMContentLoaded', renderDashboard);
 // On submit, create task
 submit.addEventListener('click', createTask);
 // On click on delete icon, delete task
 tasks.addEventListener('click', deleteTask);
+tasks.addEventListener('click', checkTask);
+// Render content
+function renderDashboard() {
+  UI.displayTasks();
+  UI.selectQuote();
+}
 // Create
 function createTask(e) {
   e.preventDefault();
@@ -123,6 +178,18 @@ function deleteTask(e) {
       e.target.parentElement.parentElement.getAttribute('data-id')
     );
     Storage.removeTask(taskId);
+  }
+}
+// Mark/Unmark task
+function checkTask(e) {
+  if (e.target.parentElement.classList.contains('complete')) {
+    const tbody = document.getElementById('tasks');
+    const taskId = Number(
+      e.target.parentElement.parentElement.getAttribute('data-id')
+    );
+    Storage.checkTask(taskId);
+    tbody.innerHTML = '';
+    UI.displayTasks();
   }
 }
 
