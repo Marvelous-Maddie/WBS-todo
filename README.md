@@ -13,10 +13,11 @@
 
 ### Coming features
 
-- Check for completion
-- Motivational phrase
-- Set name
-- Edit
+- Check for completion => Jorge
+- Motivational phrase => Madlen
+- Delete all tasks => Easy
+- Set name of owne => Togara
+- Edit => Group session
 
 ### Other changes
 
