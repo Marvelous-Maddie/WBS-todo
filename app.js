@@ -1,5 +1,5 @@
 //Motivational Quotes
-const quote1 = {quote: "All we have to decide is what to do with the time that is given us", author:"J.R.R. Tolkien", title:"The Fellowship of the Ring"};
+const quote1 = {quote: "All we have to decide is what to do with the time that is given us.", author:"J.R.R. Tolkien", title:"The Fellowship of the Ring"};
 const quote2 = {quote:"Be yourself and people will like you.", author:"J. Kinney", title:"Diary of a Wimpy Kid"};
 const quote3 = {quote:"The moment you doubt whether you can fly, you cease forever to be able to do it.", author:"J.M. Barrie", title:"Peter Pan"};
 const quote4 = {quote:"Time you enjoy wasting is not wasted time.", author: "M. Troly-Curtin", title:"Phrynette Married"};
@@ -66,7 +66,7 @@ class UI {
     const quote = motivationalQuotes[randomNumber].quote;
     const author = motivationalQuotes[randomNumber].author;
     const title = motivationalQuotes[randomNumber].title;
-    document.getElementById('quote').innerHTML = `<p id="quote" class="mb-0">${quote}</p>`;
+    document.getElementById('quote').innerHTML = `<p id="quote" class="mb-0">\"${quote}\"</p>`;
     document.getElementById('author').innerHTML = `<footer id="author" class="blockquote-footer">${author} in <cite id="title"></cite></footer>`;
     document.getElementById('title').innerHTML = `<cite id="title">${title}</cite>`;
   }
