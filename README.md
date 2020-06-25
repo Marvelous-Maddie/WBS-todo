@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## v. 1.1.0 (Current)
+## v. 1.2.0 (Current)
 
 ### Features
 
@@ -16,6 +16,23 @@
 
 ### Coming features
 
+- Delete all tasks => Easy
+- Set name of owne => Togara
+
+## v. 1.1.0
+
+### Features
+
+- Add task to UI
+- Remove task from UI
+- Clear input after submit
+- Local storage class (get, add, remove)
+- Check for completion => Jorge
+- Motivational phrase => Madlen
+
+### Coming features
+
+- Edit => Group session
 - Delete all tasks => Easy
 - Set name of owne => Togara
 
