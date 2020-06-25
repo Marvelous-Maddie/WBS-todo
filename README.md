@@ -12,12 +12,12 @@
 - Local storage class (get, add, remove)
 - Check for completion => Jorge
 - Motivational phrase => Madlen
+- Edit => Group session
 
 ### Coming features
 
 - Delete all tasks => Easy
 - Set name of owne => Togara
-- Edit => Group session
 
 ### Other changes
 
