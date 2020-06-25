@@ -65,6 +65,7 @@ class UI {
                   <i class="fas fa-check"></i>
               </button>`
           } 
+            <button class="d-inline btn btn-info btn-sm edit"><i class="fas fa-edit"></i></button>
             <button class="d-inline btn btn-danger btn-sm delete"><i class="fas fa-trash"></i></button>
         </td>
     `;
@@ -136,18 +137,32 @@ class Storage {
     });
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }
+  static update(id, desc) {
+    const tasks = Storage.getTasks();
+    tasks.forEach(task => {
+      if (task.id === id) {
+        task.desc = desc;
+      }
+    });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
 }
 // Global variables
 const submit = document.getElementById('submit');
+const edit = document.getElementById('edit');
 const tasks = document.getElementById('tasks');
 // Event listeners
 // Whenever page is loaded get stored tasks
 document.addEventListener('DOMContentLoaded', renderDashboard);
 // On submit, create task
 submit.addEventListener('click', createTask);
+// On submit, edit task
+edit.addEventListener('click', editTask);
 // On click on delete icon, delete task
 tasks.addEventListener('click', deleteTask);
 tasks.addEventListener('click', checkTask);
+tasks.addEventListener('click', setEdit);
+// On click edit task
 // Render content
 function renderDashboard() {
   UI.displayTasks();
@@ -169,7 +184,39 @@ function createTask(e) {
 // Read
 
 // Update (opcional)
-
+function setEdit(e) {
+  if (e.target.parentElement.classList.contains('edit')) {
+    const createForm = document.getElementById('task-form');
+    const editForm = document.getElementById('edit-form');
+    const editInput = document.getElementById('edit-input');
+    const taskId = e.target.parentElement.parentElement.getAttribute('data-id');
+    createForm.classList.add('d-none');
+    editForm.classList.remove('d-none');
+    editInput.setAttribute('data-id', taskId);
+    editInput.value =
+      e.target.parentElement.parentElement.previousElementSibling.innerHTML;
+  }
+}
+function editTask(e) {
+  e.preventDefault();
+  const editInput = document.getElementById('edit-input').value;
+  const createForm = document.getElementById('task-form');
+  const editForm = document.getElementById('edit-form');
+  const tbody = document.getElementById('tasks');
+  const taskId = Number(
+    document.getElementById('edit-input').getAttribute('data-id')
+  );
+  if (editInput === '') {
+    alert('Is empty');
+  } else {
+    //Pass id and new task description
+    Storage.update(taskId, editInput);
+    createForm.classList.remove('d-none');
+    editForm.classList.add('d-none');
+    tbody.innerHTML = '';
+    UI.displayTasks();
+  }
+}
 // Delete
 function deleteTask(e) {
   if (e.target.parentElement.classList.contains('delete')) {
