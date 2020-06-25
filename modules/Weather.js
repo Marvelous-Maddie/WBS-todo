@@ -6,7 +6,7 @@ class Weather {
     );*/
     // Leipzig
     const res = await fetch(
-      `https://api.weatherstack.com/current?access_key=77d3e9e87be88a39241934a280aba6b8&query=${position.coords.latitude},${position.coords.longitude}`
+      `http://api.weatherstack.com/current?access_key=77d3e9e87be88a39241934a280aba6b8&query=${position.coords.latitude},${position.coords.longitude}`
     );
     const data = await res.json();
     UI.showWeather(data);
