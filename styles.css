@@ -16,3 +16,8 @@ body {
   width: 100%;
   height: 100%;
 }
+
+#weather-icon {
+  border-radius: 50%;
+  width: 2rem;
+}

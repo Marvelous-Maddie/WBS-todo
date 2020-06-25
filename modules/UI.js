@@ -91,9 +91,9 @@ class UI {
   static showWeather(data) {
     const div = document.getElementById('weather');
     div.innerHTML = `
-    ${data.name}
-        <img src="${data.weather[0].icon}"/>
-    ${data.main.temp} °C `;
+    <img id="weather-icon" src="${data.current.weather_icons}"/>
+    ${data.location.name}
+    ${data.current.temperature} °C `;
   }
 }
 export default UI;
